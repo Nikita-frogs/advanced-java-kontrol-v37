@@ -34,8 +34,6 @@ class OrderProcessorTest {
         processor = new StandardOrderProcessor(mockRepo);
     }
 
-    // --- Позитивні тести ---
-
     @Test
     void testSuccessfulProcessingFlow() {
         processor.process("ORD-1", new BankTransferPayment());
@@ -53,7 +51,6 @@ class OrderProcessorTest {
 
         vipProcessor.process("VIP-1", new BankTransferPayment());
 
-        // >15000 (8%) + VIP (2%) = 10% discount from 16000 = 14400
         assertEquals(new BigDecimal("14400.00"), vipOrder.getTotalAmount().getAmount().setScale(2));
     }
 
@@ -65,7 +62,6 @@ class OrderProcessorTest {
         StandardOrderProcessor proc = new StandardOrderProcessor(id -> Optional.of(ord));
         proc.process("ORD-2", new BankTransferPayment());
 
-        // >15000 (8%) discount from 16000 = 14720
         assertEquals(new BigDecimal("14720.00"), ord.getTotalAmount().getAmount().setScale(2));
     }
 
